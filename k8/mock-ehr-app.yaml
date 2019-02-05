@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mock-ehr
+spec:
+  selector:
+    matchLabels:
+      app: mock-ehr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mock-ehr
+    spec:
+      containers:
+        - name: mockehr
+          image: mockehr:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: SERVER_HOST
+              value: "0.0.0.0"
+            - name: SERVER_PORT
+              value: "80"
+            - name: REMOTE_HOST
+              value: "mock-mirth-svc"
+            - name: REMOTE_PORT
+              value: "6661"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mock-ehr-svc
+spec:
+  selector:
+    app: mock-ehr
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http

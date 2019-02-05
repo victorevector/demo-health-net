@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mock-lab
+spec:
+  selector:
+    matchLabels:
+      app: mock-lab
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mock-lab
+    spec:
+      containers:
+        - name: mocklab
+          image: mocklab:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT 
+              value: "80"
+            - name: REMOTE_HOST
+              value: "mock-mirth-svc"
+            - name: REMOTE_PORT
+              value: "6662"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mock-lab-svc
+spec:
+  selector:
+    app: mock-lab
+  ports:
+    - protocol: TCP 
+      port: 80
+      targetPort: http
+              

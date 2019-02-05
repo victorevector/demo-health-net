@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mock-mirth
+spec:
+  selector:
+    matchLabels:
+      app: mock-mirth
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mock-mirth
+    spec:
+      containers:
+        - name: mirth
+          image: mirth:latest
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+            - name: channel0
+              containerPort: 6661
+            - name: channel1
+              containerPort: 6662
+---
+kind: Service
+apiVersion: v1 
+metadata:
+  name: mock-mirth-svc
+spec:
+  selector:
+    app: mock-mirth
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+    - name: channel0
+      port: 6661
+      targetPort: channel0
+    - name: channel1
+      port: 6662
+      targetPort: channel1
