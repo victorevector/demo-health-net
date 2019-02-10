@@ -1,0 +1,229 @@
+{
+    "resourceType": "DiagnosticReport",
+    "basedOn": {
+        "resourceType": "ServiceRequest",
+        "identifier" : {
+            "value" : "A222",
+            "assigner" : "HospitalX"
+          },
+        "status": "active",
+        "intent": "order",
+        "code": {
+            "coding": [
+                {
+                    "system": "http://documentation",
+                    "code": "003038"
+                }
+            ],
+            "text": "URINALYSIS"
+        },
+        "subject": {
+            "resourceType": "Patient",
+            "name": {
+                "text": "CHRIS P BACON",
+                "family": "BACON",
+                "given": "CHRIS P"
+            },
+            "telecom": {
+                "system": "phone",
+                "value": "(111)111-1111"
+            },
+            "gender": "M",
+            "birthDate": "19890101",
+            "address": {
+                "text": "1111 NUE AVENUE\n\nSAN DIEGO,CA,91919\nUS",
+                "line": [
+                    "1111 NUE AVENUE",
+                    ""
+                ],
+                "city": "SAN DIEGO",
+                "state": "CA",
+                "postalCode": "91919",
+                "country": "US"
+            },
+            "communication": [
+                {
+                    "language": "MARTIAN",
+                    "preferred": true
+                }
+            ]
+        },
+        "occurrenceDateTime": "20140418173314",
+        "requester": {
+            "reference": "Practitioner/3CPO",
+            "display": "WILL TICKEL,MD"
+        }
+    },
+    "status": "final",
+    "performer": "Organization/LabX",
+    "results": [
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "23423",
+                        "display": "Specific Gravity"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": 1.010,
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "1.005-1.030"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "322",
+                        "display": "pH"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": 7.0,
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "5.0-7.5"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "3",
+                        "display": "Urine-Color"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "Yellow",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "Yellow"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "444",
+                        "display": "WBC Esterase"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "2+",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "NEGATIVE"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "453",
+                        "display": "Protein"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "NEGATIVE",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "Negative/Trace"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "87",
+                        "display": "Glucose"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "NEGATIVE",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "Negative"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "34111",
+                        "display": "Appearance"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "HAZY",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "Clear"
+            }
+        },
+        {
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://docs",
+                        "code": "90789",
+                        "display": "Ketones"
+                    }
+                ]
+            },
+            "valueQuantity": {
+                "value": "NEGATIVE",
+                "unit": "",
+                "system": "http://unitsofmeasure.org"
+            },
+            "referenceRange": {
+                "text": "Negative"
+            }
+        }
+    ]
+}
