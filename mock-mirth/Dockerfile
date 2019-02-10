@@ -1,6 +1,6 @@
 FROM java:8
 
-ENV MIRTH_CONNECT_VERSION=3.6.0.b2287
+ENV MIRTH_CONNECT_VERSION=3.7.0.b2399
 ARG MDIR=/opt/mirth-connect
 
 # Download & Unpack Mirth
