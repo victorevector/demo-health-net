@@ -1,13 +1,14 @@
 {
     "resourceType": "DiagnosticReport",
+    "issued": "20190210020000.0",
     "basedOn": {
         "resourceType": "ServiceRequest",
-        "identifier" : {
-            "value" : "A222",
-            "assigner" : "HospitalX"
-          },
+        "identifier": {
+            "value": "ORM2102020",
+            "assigner": "HospitalX"
+        },
         "status": "active",
-        "intent": "order",
+        "intent": "NW",
         "code": {
             "coding": [
                 {
@@ -29,7 +30,11 @@
                 "value": "(111)111-1111"
             },
             "gender": "M",
-            "birthDate": "19890101",
+            "birthDate": {
+                "year": "1989",
+                "month": "01",
+                "day": "01"
+            },
             "address": {
                 "text": "1111 NUE AVENUE\n\nSAN DIEGO,CA,91919\nUS",
                 "line": [
@@ -48,10 +53,10 @@
                 }
             ]
         },
-        "occurrenceDateTime": "20140418173314",
+        "authoredOn": "",
         "requester": {
-            "reference": "Practitioner/3CPO",
-            "display": "WILL TICKEL,MD"
+            "reference": "Organization/HospitalX",
+            "display": "HospitalX"
         }
     },
     "status": "final",

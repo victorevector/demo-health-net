@@ -8,7 +8,7 @@
       <nextMetaDataId>2</nextMetaDataId>
       <name>Lab order - Observations</name>
       <description></description>
-      <revision>8</revision>
+      <revision>14</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -130,40 +130,44 @@
                 <name></name>
                 <sequenceNumber>0</sequenceNumber>
                 <enabled>true</enabled>
-                <script>// Constrcut header 
-//createSegment(&apos;MSH&apos;, tmp);
-//var msh = &apos;MSH|^~\\&amp;|LabX|LIS|HospitalX|HIS|20140418173314||ORU^R01|abc123|P|2.3&apos;;
-//
-//// Construct observation group 
-//var obr = (&apos;OBR|1|&apos; + msg.basedOn.identifier.value + &apos;||&apos; + msg.basedOn.code.coding[0].code + &apos;^&apos; + msg.basedOn.code.text + &apos;|||&apos;); 
-//
-//var obxs = msg.results.map(function(x, i) {
-//	var type;
-//	var val = x.valueQuantity.value;
-//	if (typeof val === &apos;number&apos;){
-//		type = &apos;NM&apos;;
-//		val = val.toString();
-//	}
-//	else {
-//		type = &apos;ST&apos;;
-//	}
-//	var obId = x.code.coding[0].display;
-//	var ref = x.referenceRange.text;
-//	return (&apos;OBX|&apos; + (i+1).toString() + &apos;|&apos; + type + &apos;|&apos; + obId + &apos;||&apos; + val + &apos;||&apos; + ref);
-//});
-//
-//msg = (msh + &quot;&lt;cr&gt;&quot; + obr + &quot;&lt;cr&gt;&quot; + obxs);
-//Parse inbound json 
+                <script>//Parse msg for relevant properties
+var orderId = msg[&apos;basedOn&apos;][&apos;identifier&apos;][&apos;value&apos;].toString();
+var orderCode = msg[&apos;basedOn&apos;][&apos;code&apos;][&apos;coding&apos;][0][&apos;code&apos;].toString();
+var orderName = msg[&apos;basedOn&apos;][&apos;code&apos;][&apos;text&apos;].toString();
+var dT = msg[&apos;issued&apos;].toString();
+var obxs = msg[&apos;results&apos;];
 
 //Populate outbound message template with parsed properties
 msg = tmp;
-createSegment(&apos;MSH&apos;, msg);
-createSegment(&apos;OBR&apos;, msg);
-msg[&apos;OBR&apos;][&apos;OBR.1&apos;][&apos;OBR.1.1&apos;] = 1;</script>
+msg[&apos;MSH&apos;][&apos;MSH.2&apos;][&apos;MSH.2.1&apos;] = &apos;^~\\&amp;&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;] = &apos;LIS&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;] = &apos;LabX&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;] = &apos;HIS&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;] = &apos;HospitalX&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;] = &apos;20190210021500.0&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;] = &apos;ORU^R01&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.10&apos;][&apos;MSH.10.1&apos;] = &apos;M234232&apos;;
+
+msg[&apos;OBR&apos;][&apos;OBR.1&apos;][&apos;OBR.1.1&apos;] = 1;
+msg[&apos;OBR&apos;][&apos;OBR.2&apos;][&apos;OBR.2.1&apos;] = orderId;
+msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.1&apos;] = orderCode;
+msg[&apos;OBR&apos;][&apos;OBR.4&apos;][&apos;OBR.4.2&apos;] = orderName;
+msg[&apos;OBR&apos;][&apos;OBR.7&apos;][&apos;OBR.7.1&apos;] = dT;
+
+var obx = msg[&apos;OBX&apos;]
+for(var i = 0; i &lt; obxs.length; i++) {
+	msg[&apos;OBX&apos;][i] = obx;
+	msg[&apos;OBX&apos;][i][&apos;OBX.1&apos;][&apos;OBX.1.1&apos;] = i+1;
+	msg[&apos;OBX&apos;][i][&apos;OBX.2&apos;][&apos;OBX.2.1&apos;] = typeof obxs[i].valueQuantity.value === &apos;number&apos; ? &apos;NM&apos; : &apos;ST&apos;;
+	msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.1&apos;] = obxs[i].code.coding[0].code.toString();
+	msg[&apos;OBX&apos;][i][&apos;OBX.3&apos;][&apos;OBX.3.2&apos;] = obxs[i].code.coding[0].display.toString();
+	msg[&apos;OBX&apos;][i][&apos;OBX.5&apos;][&apos;OBX.5.1&apos;] = obxs[i].valueQuantity.value.toString();
+	msg[&apos;OBX&apos;][i][&apos;OBX.7&apos;][&apos;OBX.7.1&apos;] = obxs[i].referenceRange.text.toString();
+}</script>
               </com.mirth.connect.plugins.javascriptstep.JavaScriptStep>
             </elements>
             <inboundTemplate encoding="base64"></inboundTemplate>
-            <outboundTemplate encoding="base64">TVNIfHx8fHx8fHx8fHwKT0JSfHx8fHx8fApPQlh8fHx8fHx8</outboundTemplate>
+            <outboundTemplate encoding="base64">TVNIfHx8fHx8fHx8fFB8Mi4zCk9CUnx8fF58fHx8Ck9CWHx8fHx8fHw=</outboundTemplate>
             <inboundDataType>JSON</inboundDataType>
             <outboundDataType>HL7V2</outboundDataType>
             <inboundProperties class="com.mirth.connect.plugins.datatypes.json.JSONDataTypeProperties" version="3.7.0">
@@ -223,7 +227,7 @@ msg[&apos;OBR&apos;][&apos;OBR.1&apos;][&apos;OBR.1.1&apos;] = 1;</script>
                 <useStrictParser>false</useStrictParser>
                 <useStrictValidation>false</useStrictValidation>
                 <stripNamespaces>true</stripNamespaces>
-                <segmentDelimiter>\r</segmentDelimiter>
+                <segmentDelimiter>&lt;cr&gt;</segmentDelimiter>
                 <convertLineBreaks>true</convertLineBreaks>
               </serializationProperties>
               <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.7.0">
@@ -262,13 +266,13 @@ msg[&apos;OBR&apos;][&apos;OBR.1&apos;][&apos;OBR.1.1&apos;] = 1;</script>
                 <useStrictParser>false</useStrictParser>
                 <useStrictValidation>false</useStrictValidation>
                 <stripNamespaces>true</stripNamespaces>
-                <segmentDelimiter>\r</segmentDelimiter>
+                <segmentDelimiter>&lt;cr&gt;</segmentDelimiter>
                 <convertLineBreaks>true</convertLineBreaks>
               </serializationProperties>
               <deserializationProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2DeserializationProperties" version="3.7.0">
                 <useStrictParser>false</useStrictParser>
                 <useStrictValidation>false</useStrictValidation>
-                <segmentDelimiter>\r</segmentDelimiter>
+                <segmentDelimiter>&lt;cr&gt;</segmentDelimiter>
               </deserializationProperties>
               <batchProperties class="com.mirth.connect.plugins.datatypes.hl7v2.HL7v2BatchProperties" version="3.7.0">
                 <splitType>MSH_Segment</splitType>
@@ -351,7 +355,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1549752900676</time>
+            <time>1549871751139</time>
             <timezone>America/Los_Angeles</timezone>
           </lastModified>
           <pruningSettings>
@@ -365,7 +369,7 @@ return;</undeployScript>
       <nextMetaDataId>2</nextMetaDataId>
       <name>Lab orders</name>
       <description></description>
-      <revision>5</revision>
+      <revision>4</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -549,7 +553,7 @@ return;</undeployScript>
             <content>${message.transformedData}</content>
             <contentType>text/plain</contentType>
             <dataTypeBinary>false</dataTypeBinary>
-            <charset>ISO-8859-15</charset>
+            <charset>ISO-2022-KR</charset>
             <socketTimeout>30000</socketTimeout>
           </properties>
           <transformer version="3.7.0">
@@ -766,7 +770,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1549790688606</time>
+            <time>1549855133747</time>
             <timezone>America/Los_Angeles</timezone>
           </lastModified>
           <pruningSettings>
