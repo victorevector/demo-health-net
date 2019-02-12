@@ -1,21 +1,16 @@
 #!/bin/bash
 
-echo "Start minikube"
+echo "[1] Start minikube"
 minikube start --vm-driver=hyperkit
 
-echo "Build images in virtual machine (minikube)"
+echo "[2] Build images in virtual machine (minikube)"
 eval $(minikube docker-env)
-echo "Build mockehr"
+echo "[2.1] Build mockehr"
 docker build -t mockehr ../mock-ehr/
-echo "Build mirth"
+echo "[2.2] Build mirth"
 docker build -t mirth ../mock-mirth/
-echo "Build mocklab"
+echo "[2.3] Build mocklab"
 docker build -t mocklab ../mock-lab/
 
-echo "Create kubernetes cluster"
-echo "Create mock-ehr deployment & service"
-kubectl create -f ./mock-ehr-app.yaml
-echo "Create mock-mirth deployment & service"
-kubectl create -f ./mock-mirth-app.yaml
-echo "Create mock-lab deployment & service"
-kubectl create -f ./mock-lab-app.yaml
+echo "[3] Build kubernetes cluster"
+kubectl create -f ./

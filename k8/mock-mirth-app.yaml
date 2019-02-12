@@ -12,6 +12,10 @@ spec:
       labels:
         app: mock-mirth
     spec:
+      volumes:
+        - name: mirth-volume 
+          persistentVolumeClaim:
+            claimName: mirth-pv-claim
       containers:
         - name: mirth
           image: mirth:latest
@@ -25,6 +29,9 @@ spec:
               containerPort: 6661
             - name: channel1
               containerPort: 6662
+          volumeMounts:
+            - mountPath: "/opt/mirth-connect/appdata"
+              name: mirth-volume
 ---
 kind: Service
 apiVersion: v1 

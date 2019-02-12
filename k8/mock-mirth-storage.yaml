@@ -1,0 +1,24 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-mirth
+spec:
+  storageClassName: mirth-store
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 100Mi
+  hostPath:
+    path: /data/pv-mirth/
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mirth-pv-claim
+spec:
+  storageClassName: mirth-store
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
