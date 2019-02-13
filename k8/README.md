@@ -1,0 +1,1 @@
+This directory contains the configuration files needed to create kubernetes objects. Each application is represented by at least a Deployment and Service. 
