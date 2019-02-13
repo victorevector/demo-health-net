@@ -1,0 +1,14 @@
+.underline {
+    width: 40%;
+    margin-top: 1px;
+    margin-left: 0;
+    margin-right: 0;
+    height: 5px;
+    background-color:rgb(100, 187, 20);
+    opacity: 0.3;
+}
+.frame {
+    height: 10px;
+    background-color: red;
+    opacity: .3;
+}
