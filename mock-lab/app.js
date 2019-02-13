@@ -21,7 +21,8 @@ const server = http.createServer((req, res) => {
         Validating...
         Creating new resource instance...
         /ServiceRequest/003038-002`);
-    // Lab order gets processed
+
+    // Lab order gets processed after a fictional delay... and sent out!
     setTimeout(() => {
         // Configure http client
         const options = {

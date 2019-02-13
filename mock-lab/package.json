@@ -2,7 +2,7 @@
   "name": "mock-lab",
   "version": "1.0.0",
   "description": "A mock vendor on a healthcare network. It pretends to be a laboratory.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
