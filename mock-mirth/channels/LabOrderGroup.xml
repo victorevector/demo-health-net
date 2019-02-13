@@ -6,9 +6,14 @@
     <channel version="3.7.0">
       <id>5b9e5fb3-d118-4e05-b088-c70af1e05459</id>
       <nextMetaDataId>2</nextMetaDataId>
-      <name>Lab order - Observations</name>
-      <description></description>
-      <revision>14</revision>
+      <name>Lab Observations</name>
+      <description>This channel facilitates the subsequent portion of the fictional scenario:
+
+Sometime later, the LIS processes an order completion event and sends the observations to the appropriate Mirth channel. The Mirth channel transforms it and sends it to the EHR. The EHR requires that the message contain:
+
+- The original identifier to reconcile the observations with the original request.
+- The observations.</description>
+      <revision>4</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -142,7 +147,7 @@ msg = tmp;
 msg[&apos;MSH&apos;][&apos;MSH.2&apos;][&apos;MSH.2.1&apos;] = &apos;^~\\&amp;&apos;;
 msg[&apos;MSH&apos;][&apos;MSH.3&apos;][&apos;MSH.3.1&apos;] = &apos;LIS&apos;;
 msg[&apos;MSH&apos;][&apos;MSH.4&apos;][&apos;MSH.4.1&apos;] = &apos;LabX&apos;;
-msg[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;] = &apos;HIS&apos;;
+msg[&apos;MSH&apos;][&apos;MSH.5&apos;][&apos;MSH.5.1&apos;] = &apos;EHR&apos;;
 msg[&apos;MSH&apos;][&apos;MSH.6&apos;][&apos;MSH.6.1&apos;] = &apos;HospitalX&apos;;
 msg[&apos;MSH&apos;][&apos;MSH.7&apos;][&apos;MSH.7.1&apos;] = &apos;20190210021500.0&apos;;
 msg[&apos;MSH&apos;][&apos;MSH.9&apos;][&apos;MSH.9.1&apos;] = &apos;ORU^R01&apos;;
@@ -355,7 +360,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1549871751139</time>
+            <time>1550023187392</time>
             <timezone>America/Los_Angeles</timezone>
           </lastModified>
           <pruningSettings>
@@ -367,9 +372,15 @@ return;</undeployScript>
     <channel version="3.7.0">
       <id>7170a0d5-01de-4913-9bc4-734a2e8e4b97</id>
       <nextMetaDataId>2</nextMetaDataId>
-      <name>Lab orders</name>
-      <description></description>
-      <revision>4</revision>
+      <name>Lab Orders</name>
+      <description>This channel faciliates the first part of the scenario:
+
+Dr. Will Tickel works at Hospital X and orders a Urinalysis for his patient, Chris P. Bacon. The EHR system processes the order event and sends it to the appropriate Mirth channel. The Mirth channel transforms it and sends it to the LIS. The LIS requires that the message contain:
+
+- Patient information to verify patient&apos;s identity during check in.
+- The order.
+- An identifier for the order.</description>
+      <revision>3</revision>
       <sourceConnector version="3.7.0">
         <metaDataId>0</metaDataId>
         <name>sourceConnector</name>
@@ -553,7 +564,7 @@ return;</undeployScript>
             <content>${message.transformedData}</content>
             <contentType>text/plain</contentType>
             <dataTypeBinary>false</dataTypeBinary>
-            <charset>ISO-2022-KR</charset>
+            <charset>ISO-2022-JP</charset>
             <socketTimeout>30000</socketTimeout>
           </properties>
           <transformer version="3.7.0">
@@ -770,7 +781,7 @@ return;</undeployScript>
         <metadata>
           <enabled>true</enabled>
           <lastModified>
-            <time>1549855133747</time>
+            <time>1550020389668</time>
             <timezone>America/Los_Angeles</timezone>
           </lastModified>
           <pruningSettings>
